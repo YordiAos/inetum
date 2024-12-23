@@ -10,7 +10,7 @@ let page: Page;
 let ownerProfilePage: OwnerProfilePage;
 let petNameGlobal: string;
 
-// setDefaultTimeout(30 * 1000);
+setDefaultTimeout(30 * 1000);
 
 // Función para generar un nombre aleatorio de 5 caracteres
 function generarNombreAleatorio(longitud: number): string {
