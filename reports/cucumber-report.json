@@ -1,0 +1,94 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "edit-pets-to-an-owner;edit-pets-to-an-owner-and-validate-they-appear-in-the-list",
+        "keyword": "Scenario",
+        "line": 11,
+        "name": "Edit pets to an owner and validate they appear in the list",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 5,
+            "name": "I am on the owner's profile page",
+            "match": {
+              "location": "src\\steps\\addPets.spec.ts:26"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4202690599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 6,
+            "name": "I select \"Add New Pet\"",
+            "match": {
+              "location": "src\\steps\\addPets.spec.ts:35"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2567641400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "I fill out the pet form with valid pet information \"aleatorio\" \"dog\" \"2024-10-04\"",
+            "match": {
+              "location": "src\\steps\\addPets.spec.ts:39"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 748768700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 8,
+            "name": "Check update pet",
+            "match": {
+              "location": "src\\steps\\addPets.spec.ts:66"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 33249399
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@smoke",
+            "line": 1
+          },
+          {
+            "name": "@editPet",
+            "line": 3
+          },
+          {
+            "name": "@happyPath",
+            "line": 3
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "edit-pets-to-an-owner",
+    "line": 2,
+    "keyword": "Feature",
+    "name": "Edit Pets to an Owner",
+    "tags": [
+      {
+        "name": "@smoke",
+        "line": 1
+      }
+    ],
+    "uri": "src\\features\\edit-pets.feature"
+  }
+]

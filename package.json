@@ -1,0 +1,19 @@
+{
+  "name": "orangehrm-playwright",
+  "version": "1.0.0",
+  "scripts": {
+    "test1": "npx cucumber-js --require-module ts-node/register --tags \"@happyPath\" ",
+    "test": "npx cucumber-js src/features --tags \"@list\" "
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.1.1",
+    "@types/node": "^20.0.0",
+    "playwright": "^1.35.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.49.1",
+    "screen": "^0.2.10"
+  }
+}
