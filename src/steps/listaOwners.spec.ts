@@ -12,11 +12,12 @@ let basePage: BasePage;
 Given("I navigate to the Petclinic home page", async () => {
   browser = await chromium.launch({ headless: false });
   page = await browser.newPage();
-  basePage = new BasePage(page);
+  
   ownersPage = new OwnersPage(page);
-
-  const homePageUrl = getEnvironmentUrl("URL");
-  await basePage.navigateTo(homePageUrl);
+  
+  basePage = new BasePage(page);
+  const URL = getEnvironmentUrl("URL");
+  await basePage.navigateTo(URL);
 });
 
 When('I access the "Owners" section', async () => {

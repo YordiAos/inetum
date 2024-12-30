@@ -1,12 +1,7 @@
 @smoke
-Feature: Edit Pets to an Owner
+Feature: Agregar visita a una mascota
     @editPet @happyPath
-    Scenario: Edit pets to an owner and validate they appear in the list
-        Given I am on the owner's profile page
-        When I select "Add New Pet"
-        And I fill out the pet form with valid pet information "<petName>" "<species>" "<birthDate>"
-        Then Check update pet
-        Examples:
-            | petName   | species | birthDate  |
-            | aleatorio | dog     | 2024-10-04 |
-
+    Scenario: El usuario agrega una visita a una mascota específica
+        Given que estoy en el perfil de la mascota
+        When agrego una visita con fecha "2024-12-25" y descripción "Visita de control"
+        Then la visita con descripción "Visita de control" debe aparecer en la lista de visitas
