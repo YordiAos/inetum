@@ -8,5 +8,5 @@ Feature: Add Pets to an Owner
         Then Check registered pet
         Examples:
             | petName   | species | birthDate  |
-            | aleatorio | dog     | 2024-10-04 |
+            | firu | dog     | 2024-10-04 |
 

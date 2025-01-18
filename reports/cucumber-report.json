@@ -1,0 +1,64 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "obtener-documentos-rechazados;obtener-la-lista-de-documentos-rechazados",
+        "keyword": "Scenario",
+        "line": 4,
+        "name": "Obtener la lista de documentos rechazados",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 5,
+            "name": "que he iniciado sesion y estoy en la web SOVOS \"https://egw401qa.paperless.com.pe/Facturacion/jsp/gestdoc/docemi/listarDocs.jsp\"",
+            "match": {
+              "location": "src\\steps\\sovos.spec.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 8337900299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 6,
+            "name": "filtro por documentos \"rechazados\" de la fecha \"14-01-2025\"",
+            "match": {
+              "location": "src\\steps\\sovos.spec.ts:29"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1098411999
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@sovos",
+            "line": 1
+          },
+          {
+            "name": "@happyPath",
+            "line": 3
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "obtener-documentos-rechazados",
+    "line": 2,
+    "keyword": "Feature",
+    "name": "Obtener documentos rechazados",
+    "tags": [
+      {
+        "name": "@sovos",
+        "line": 1
+      }
+    ],
+    "uri": "src\\features\\sovos.feature"
+  }
+]
