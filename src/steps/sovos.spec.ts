@@ -26,7 +26,7 @@ Given(
   }
 );
 
-When("filtro por documentos {string} de la fecha {string}", async (status: string,fecha:string) => {
+When("filtro por documentos {string} del dia {string}", async (status: string,fecha:string) => {
   await sovosPage.filterRejectedDocuments(status,fecha); // Filtrar los documentos rechazados
 });
 
