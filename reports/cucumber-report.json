@@ -19,20 +19,20 @@
             },
             "result": {
               "status": "passed",
-              "duration": 10468534499
+              "duration": 9256227699
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 9,
-            "name": "filtro por documentos \"rechazados\" del dia \"14-01-2025\"",
+            "line": 8,
+            "name": "filtro por documentos \"rechazados\" del dia \"\"",
             "match": {
               "location": "src\\steps\\sovos.spec.ts:29"
             },
             "result": {
               "status": "passed",
-              "duration": 599807300
+              "duration": 599361799
             }
           }
         ],
