@@ -1,3 +1,8 @@
+# comandos para instalr:
+# npm install
+# npx playwright install
+
+# ultimo paso
 #npx cucumber-js src/features --tags "@sovos"
 @sovos
 Feature: Obtener documentos rechazados
@@ -8,3 +13,5 @@ Feature: Obtener documentos rechazados
         When filtro por documentos "rechazados" del dia ""
         #si no se agrega fecha,tomara la fecha actual.
         
+
+
