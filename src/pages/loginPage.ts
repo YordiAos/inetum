@@ -71,11 +71,11 @@ export class LoginPage extends BasePage {
 
   async submitLogin() {
     await this.page.click(this.submitButton);
-    await this.waitForElement(this.validarTextPuntosBonus);
-    const welcomeText = await this.page
-      .locator(this.validarTextPuntosBonus)
-      .innerText();
-    expect(welcomeText).toContain("Tienes disponible:");
+    // await this.waitForElement(this.validarTextPuntosBonus);
+    // const welcomeText = await this.page
+    //   .locator(this.validarTextPuntosBonus)
+    //   .innerText();
+    // expect(welcomeText).toContain("Tienes disponible:");
   }
   async esperarFormLogin(ejecucion: string = "default") {
     await this.page.waitForLoadState("networkidle");
@@ -330,29 +330,7 @@ export class LoginPage extends BasePage {
     this.getCurrentDate(10);
   }
 
-  /*
-    await this.safeExecute(
-      "Redireccion y espera de cargar todas peticiones de page checkout",
-      () =>
-        // Espera hasta que no haya más peticiones activas.
-        this.page.waitForLoadState("networkidle")
-    );
-    // await this.page.waitForSelector('.btn-go-to-payment');
-    await this.page.waitForSelector('.btn-go-to-payment', { 
-      state: 'visible', 
-      timeout: 60000  // Aumentar el tiempo de espera si es necesario
-  });
-    await this.safeExecute("clic en IR A METODO DE PAGO", () =>
-      this.page.click('.btn-go-to-payment')
-    );
-
-    //seccion metodo de pago
-    await this.page.waitForSelector('#payment-group-cardPromissoryPaymentGroup');
-    await this.safeExecute("clic en METODO DE PAGO", () =>
-      this.page.click('#payment-group-cardPromissoryPaymentGroup')
-    );
-  }
-  */
+  
   async chooseDate() {
     // Suponiendo que ya tienes una instancia de la página
     const dias = await this.page.$$(

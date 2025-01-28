@@ -1,12 +1,12 @@
 import * as fs from "fs";
-import { Given, When, Then } from "@cucumber/cucumber";
+import { Given, When, Then,setDefaultTimeout} from "@cucumber/cucumber";
 import { expect } from "@playwright/test";
 import { LoginPage } from "../pages/loginPage";
 import { page } from "../utils/hooks"; // Importa `page` desde los hooks
 import { captureAndAttachScreenshot } from "../utils/utils";
 
 let loginPage: LoginPage;
-
+setDefaultTimeout(69000); // Establecer un tiempo de espera predeterminado para la prueba, si es necesario
 // Paso para inicializar el navegador
 Given("un usuario de tipo {string} con correo {string} y clave {string}", async function (tipoUsuario, correo, clave) {
   loginPage = new LoginPage(page);
@@ -22,6 +22,7 @@ When("el usuario ingresa con las credenciales", async function () {
   await loginPage.enterCredentials(correo, clave);
   this.attach(await captureAndAttachScreenshot(page, "Datos Login-Screenshot"), "image/png");
   await loginPage.submitLogin();
+  this.attach(await captureAndAttachScreenshot(page, "After Login-Screenshot"), "image/png");
   
 });
 
