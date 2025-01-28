@@ -4,6 +4,7 @@
 
 # ultimo paso
 #npx cucumber-js src/features --tags "@sovos"
+#npx playwright test --grep "@addPet"
 @sovos
 Feature: Obtener documentos rechazados
     @happyPath
@@ -12,6 +13,4 @@ Feature: Obtener documentos rechazados
         #Usar formato dia-mes-año "14-01-2025"
         When filtro por documentos "rechazados" del dia ""
         #si no se agrega fecha,tomara la fecha actual.
-        
-
 
