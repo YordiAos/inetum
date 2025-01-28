@@ -38,10 +38,10 @@ export class LoginPage extends BasePage {
   //   });
   //   await this.captureScreenshot("Screenshot-Login Page");
   // }
-  
+
   async navigate() {
     console.log("Navigate to login page");
-    await this.page.goto("https://www.wong.pe",{ timeout: 90000,waitUntil: 'networkidle'});
+    await this.navigateTo("https://www.wong.pe");
     console.log("TESTINGGG");
   }
 
@@ -67,21 +67,15 @@ export class LoginPage extends BasePage {
       await this.page.fill(this.passwordInput, password);
       */
     await this.page.click(this.checkBox);
-    await this.captureScreenshot("Screenshot-Datos ingresados");
   }
 
   async submitLogin() {
-    await test.step("Sub pasos", async () => {
-      await this.page.click(this.submitButton);
-      await this.waitForElement(this.validarTextPuntosBonus);
-      const welcomeText = await this.page
-        .locator(this.validarTextPuntosBonus)
-        .innerText();
-      expect(welcomeText).toContain("Tienes disponible:");
-    });
-    await this.captureScreenshot(
-      "Screenshot-Después de hacer clic en Iniciar sesión"
-    );
+    await this.page.click(this.submitButton);
+    await this.waitForElement(this.validarTextPuntosBonus);
+    const welcomeText = await this.page
+      .locator(this.validarTextPuntosBonus)
+      .innerText();
+    expect(welcomeText).toContain("Tienes disponible:");
   }
   async esperarFormLogin(ejecucion: string = "default") {
     await this.page.waitForLoadState("networkidle");
@@ -305,9 +299,6 @@ export class LoginPage extends BasePage {
       );
     });
 
-    await this.safeExecute("Evidencia screenshot", () =>
-      this.captureScreenshot(".............")
-    );
   }
   async pageCheckout() {
     await this.safeExecute(

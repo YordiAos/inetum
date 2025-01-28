@@ -18,10 +18,11 @@ Given("un usuario de tipo {string} con correo {string} y clave {string}", async 
 When("el usuario ingresa con las credenciales", async function () {
   const { correo, clave } = this.userCredentials;
   await loginPage.navigate();
-  this.attach(await captureAndAttachScreenshot(page, "PRUEBAS-screenshot"), "image/png");
-
+  this.attach(await captureAndAttachScreenshot(page, "Home-Screenshot"), "image/png");
   await loginPage.enterCredentials(correo, clave);
-  // await loginPage.submitLogin();
+  this.attach(await captureAndAttachScreenshot(page, "Datos Login-Screenshot"), "image/png");
+  await loginPage.submitLogin();
+  
 });
 
 // Paso para buscar productos y seleccionar tienda
