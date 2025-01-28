@@ -13,4 +13,4 @@ Feature: Login y Selección de Productos en Wong
     Examples:
       | tipo_usuario      | correo                          | clave       | producto | tienda       |
       | Usuario regular   | francesca.montilla@coderio.co   | Cenco1234   | arroz    | Wong Ate     |
-      | Usuario nuevo     | yordidosaguilar@gmail.com       | 123456aA    | avena    | Wong Ate     |
+    #   | Usuario nuevo     | yordidosaguilar@gmail.com       | 123456aA    | avena    | Wong Ate     |

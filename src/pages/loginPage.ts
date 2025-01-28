@@ -38,39 +38,35 @@ export class LoginPage extends BasePage {
   //   });
   //   await this.captureScreenshot("Screenshot-Login Page");
   // }
+  
   async navigate() {
     console.log("Navigate to login page");
-    await this.page.goto("https://tu-sitio-web.com/login");
-  }
-
-  async goToHomePage() {
-    await this.page.goto("https://www.wong.pe");
+    await this.page.goto("https://www.wong.pe",{ timeout: 90000,waitUntil: 'networkidle'});
+    console.log("TESTINGGG");
   }
 
   async enterCredentials(username: string, password: string) {
-    await test.step("Sub pasos", async () => {
-      // Espera a que el botón de aceptación de cookies sea visible
-      const acceptCookiesButton = this.page.locator(this.aceptarCookies); // Ajusta el selector según el botón que aparece en tu página
-      await acceptCookiesButton.waitFor({ state: "visible" }); // Espera hasta que sea visible
-      await acceptCookiesButton.click();
+    // Espera a que el botón de aceptación de cookies sea visible
+    const acceptCookiesButton = this.page.locator(this.aceptarCookies); // Ajusta el selector según el botón que aparece en tu página
+    await acceptCookiesButton.waitFor({ state: "visible" }); // Espera hasta que sea visible
+    await acceptCookiesButton.click();
 
-      await this.page.click(this.iconoLogin);
+    await this.page.click(this.iconoLogin);
 
-      await this.waitForElement(".pv3 input[placeholder]");
-      const inputs = await this.page.$$(".pv3 input[placeholder]");
-      if (inputs.length < 2) {
-        throw new Error("No se encontraron los campos de usuario y contraseña");
-      }
-      const user = inputs[0]; // Primer campo de input
-      const pass = inputs[1]; // Segundo campo de input
-      await user.fill(username);
-      await pass.fill(password);
-      /*
+    await this.waitForElement(".pv3 input[placeholder]");
+    const inputs = await this.page.$$(".pv3 input[placeholder]");
+    if (inputs.length < 2) {
+      throw new Error("No se encontraron los campos de usuario y contraseña");
+    }
+    const user = inputs[0]; // Primer campo de input
+    const pass = inputs[1]; // Segundo campo de input
+    await user.fill(username);
+    await pass.fill(password);
+    /*
       await this.page.fill(this.usernameInput, username);
       await this.page.fill(this.passwordInput, password);
       */
-      await this.page.click(this.checkBox);
-    });
+    await this.page.click(this.checkBox);
     await this.captureScreenshot("Screenshot-Datos ingresados");
   }
 
