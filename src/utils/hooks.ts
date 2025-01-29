@@ -1,23 +1,34 @@
-import * as fs from "fs";
-import { captureAndAttachScreenshot } from "../utils/utils"; // Asegúrate de que esta ruta sea correcta
-import { Before, After, setWorldConstructor } from "@cucumber/cucumber";
+import {
+  Before,
+  After,
+  setWorldConstructor,
+  setDefaultTimeout,
+} from "@cucumber/cucumber";
 import { Page, Browser, BrowserContext, chromium } from "playwright";
-import { BasePage } from "../pages/basePage";
+import { defineConfig } from "playwright/test";
+
+// import defineConfig from "../../playwright.config"; // Importa tu configuración de Playwright
 
 let browser: Browser;
 let context: BrowserContext;
 let page: Page;
-let basePage: BasePage;
+
+setDefaultTimeout(27* 1000); // n segundos para cada paso cucumber
 
 Before(async () => {
   browser = await chromium.launch({ headless: false });
-  context = await browser.newContext();
+  context = await browser.newContext({
+    viewport: { width: 1900, height: 920 }, // Configura el tamaño del viewport
+  });
   page = await context.newPage(); // Crea una nueva página
-  
+  // await page.goto('about:blank');
+  // await page.keyboard.press("F11");
+  page.setDefaultTimeout(10100); // Tiempo para acciones,clic,etc
+  page.setDefaultNavigationTimeout(12100); // Tiempo para navegaciones
 });
 
 // After(async () => {
-//     // await browser.close(); // Cierra el navegador al finalizar los tests
+//  await browser.close(); // Cierra el navegador al finalizar los tests
 // });
 After(async function () {
   // const screenshotPath = await captureAndAttachScreenshot(

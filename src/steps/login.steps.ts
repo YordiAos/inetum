@@ -1,12 +1,14 @@
-import * as fs from "fs";
+
 import { Given, When, Then,setDefaultTimeout} from "@cucumber/cucumber";
-import { expect } from "@playwright/test";
 import { LoginPage } from "../pages/loginPage";
 import { page } from "../utils/hooks"; // Importa `page` desde los hooks
-import { captureAndAttachScreenshot } from "../utils/utils";
+import { Utils } from "../utils/utils";
+
+
 
 let loginPage: LoginPage;
-setDefaultTimeout(69000); // Establecer un tiempo de espera predeterminado para la prueba, si es necesario
+// setDefaultTimeout(68000); // Establecer un tiempo de espera predeterminado para la prueba, si es necesario
+
 // Paso para inicializar el navegador
 Given("un usuario de tipo {string} con correo {string} y clave {string}", async function (tipoUsuario, correo, clave) {
   loginPage = new LoginPage(page);
@@ -18,17 +20,17 @@ Given("un usuario de tipo {string} con correo {string} y clave {string}", async 
 When("el usuario ingresa con las credenciales", async function () {
   const { correo, clave } = this.userCredentials;
   await loginPage.navigate();
-  this.attach(await captureAndAttachScreenshot(page, "Home-Screenshot"), "image/png");
+  this.attach(await Utils.captureAndAttachScreenshot(page, "Home-Screenshot"), "image/png");
   await loginPage.enterCredentials(correo, clave);
-  this.attach(await captureAndAttachScreenshot(page, "Datos Login-Screenshot"), "image/png");
+  this.attach(await Utils.captureAndAttachScreenshot(page, "Datos Login-Screenshot"), "image/png");
   await loginPage.submitLogin();
-  this.attach(await captureAndAttachScreenshot(page, "After Login-Screenshot"), "image/png");
+  this.attach(await Utils.captureAndAttachScreenshot(page, "After Login-Screenshot"), "image/png");
   
 });
 
 // Paso para buscar productos y seleccionar tienda
 Then("el usuario debería poder buscar el producto {string} y seleccionar la tienda {string}", async function (producto, tienda) {
-  // await loginPage.pageHomeAddProduct(producto, tienda);
+  await loginPage.pageHomeAddProduct(producto, tienda);
   // await loginPage.pageMinicarrito();
   // await loginPage.pageCarrito();
   // await loginPage.pageCheckout();

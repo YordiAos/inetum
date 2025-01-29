@@ -2,7 +2,8 @@
 import test, { expect } from "playwright/test";
 import { BasePage } from "./basePage";
 import { GeneradorCorreo } from "../utils/generadorCorreo";
-import { Utilitarios } from "../utils/utilitarios";
+import { Utils } from "../utils/utils";
+
 export class LoginPage extends BasePage {
   private iconoLogin = ".vtex-overlay-layout-0-x-trigger";
   private aceptarCookies = ".swal2-confirm.swal2-styled";
@@ -133,11 +134,11 @@ export class LoginPage extends BasePage {
     });
   }
   async validarTextoDeUnElementoCapturado(textoEsperado: string) {
-    const util = new Utilitarios();
+    
     // Captura el texto del hijo correspondiente
     const texto = await this.page.locator(`.flex-row.c-success`).innerText();
     // Transformación del texto si es necesario
-    const textoTransformado = util.transformarTexto(texto);
+    const textoTransformado = Utils.transformarTexto(texto);
     console.log(`texto capturado:`, textoTransformado, " vs ", textoEsperado);
     expect(textoTransformado?.trim()).toEqual(textoEsperado);
   }
@@ -145,13 +146,13 @@ export class LoginPage extends BasePage {
     indiceHijo: number,
     textoEsperado: string
   ) {
-    const util = new Utilitarios();
+    
     // Captura el texto del hijo correspondiente
     const texto = await this.page
       .locator(`.mt2:nth-child(${indiceHijo})`)
       .innerText();
 
-    const textoTransformado = util.transformarTexto(texto);
+    const textoTransformado = Utils.transformarTexto(texto);
     console.log(
       `texto capturado ${indiceHijo}:`,
       textoTransformado,
@@ -209,7 +210,7 @@ export class LoginPage extends BasePage {
   }
 
   async pageHomeAddProduct(producto: string, tienda: string) {
-    await test.step("Sub pasos", async () => {
+    
       await this.waitForElement(this.cajaBusqueda);
       await this.page.fill(this.cajaBusqueda, producto);
       await this.page.press(this.cajaBusqueda, "Enter");
@@ -240,7 +241,7 @@ export class LoginPage extends BasePage {
       await this.safeExecute("Esperar carga cantidad productos", () =>
         this.waitForElement(this.inputCantidadProductosHome)
       );
-    });
+   
   }
 
   async selectStore(optionText: string) {

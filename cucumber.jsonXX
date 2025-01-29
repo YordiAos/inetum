@@ -1,6 +1,0 @@
-{
-  "require": ["src/**/*.ts"],
-  "tags": "@happyPath",
-  "requireModule": ["ts-node/register"],
-  "publishQuiet": true
-}
