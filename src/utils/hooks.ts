@@ -5,9 +5,8 @@ import {
   setDefaultTimeout,
 } from "@cucumber/cucumber";
 import { Page, Browser, BrowserContext, chromium } from "playwright";
-import { defineConfig } from "playwright/test";
 
-// import defineConfig from "../../playwright.config"; // Importa tu configuración de Playwright
+
 
 let browser: Browser;
 let context: BrowserContext;
