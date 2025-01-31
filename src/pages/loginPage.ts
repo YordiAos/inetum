@@ -134,7 +134,6 @@ export class LoginPage extends BasePage {
     });
   }
   async validarTextoDeUnElementoCapturado(textoEsperado: string) {
-    
     // Captura el texto del hijo correspondiente
     const texto = await this.page.locator(`.flex-row.c-success`).innerText();
     // Transformación del texto si es necesario
@@ -146,7 +145,6 @@ export class LoginPage extends BasePage {
     indiceHijo: number,
     textoEsperado: string
   ) {
-    
     // Captura el texto del hijo correspondiente
     const texto = await this.page
       .locator(`.mt2:nth-child(${indiceHijo})`)
@@ -210,38 +208,55 @@ export class LoginPage extends BasePage {
   }
 
   async pageHomeAddProduct(producto: string, tienda: string) {
+    // Se repite 2 veces puesto q existe 2 recargas f5
+    // await this.page.waitForLoadState("networkidle");
+    // await this.page.waitForLoadState("networkidle");
+    await this.safeExecute("Esperar recarga web 2 veces", async () => {
+      this.page.waitForTimeout(9.5 * 1000);
+    });
+
+    await this.safeExecute(
+      "Esperar caja y escribir producto presionando enter ",
+      async () => {
+        await this.waitForElement(this.cajaBusqueda);
+        this.page.fill(this.cajaBusqueda, producto);
+        this.page.press(this.cajaBusqueda, "Enter");
+      }
+    );
+
+    await this.safeExecute("Esperar texto resultado busqueda", () =>
+      this.waitForElement(this.validarTextResultadoBusqueda)
+    );
+    await this.safeExecute("Esperar boton agregar producto", () =>
+      this.waitForElement(this.buttonAddProducto)
+    );
+    await this.safeExecute("Primer click boton agregar producto", () =>
+      this.page.click(this.buttonAddProducto)
+    );
+
+    await this.waitForElement(this.buttonRecogojoEnTienda);
+    await this.page.click(this.buttonRecogojoEnTienda);
+    await this.selectStore(tienda);
+
+    await this.safeExecute("Esperar texto resultado busqueda", () =>
+      this.waitForElement(this.validarTextResultadoBusqueda)
+    );
+    await this.safeExecute("Esperar boton agregar producto", () =>
+      this.waitForElement(this.buttonAddProducto)
+    );
+    await this.safeExecute("Click en boton agregar producto", () =>
+      this.page.click(this.buttonAddProducto)
+    );
     
-      await this.waitForElement(this.cajaBusqueda);
-      await this.page.fill(this.cajaBusqueda, producto);
-      await this.page.press(this.cajaBusqueda, "Enter");
 
-      await this.safeExecute("Esperar texto resultado busqueda", () =>
-        this.waitForElement(this.validarTextResultadoBusqueda)
-      );
-      await this.safeExecute("Esperar boton agregar producto", () =>
-        this.waitForElement(this.buttonAddProducto)
-      );
-      await this.safeExecute("Primer click boton agregar producto", () =>
-        this.page.click(this.buttonAddProducto)
-      );
-
-      await this.waitForElement(this.buttonRecogojoEnTienda);
-      await this.page.click(this.buttonRecogojoEnTienda);
-      await this.selectStore(tienda);
-
-      await this.safeExecute("Esperar texto resultado busqueda", () =>
-        this.waitForElement(this.validarTextResultadoBusqueda)
-      );
-      await this.safeExecute("Esperar boton agregar producto", () =>
-        this.waitForElement(this.buttonAddProducto)
-      );
-      await this.safeExecute("Click en boton agregar producto", async () => {
-        await this.page.click(this.buttonAddProducto);
-      });
-      await this.safeExecute("Esperar carga cantidad productos", () =>
-        this.waitForElement(this.inputCantidadProductosHome)
-      );
-   
+    await this.safeExecute("Esperar caja cantidad productos", async () => {
+      await this.waitForElement(this.inputCantidadProductosHome); // Espera a que el input aparezca
+      const txtCantidad = await this.page.locator(this.inputCantidadProductosHome).inputValue(); //obtener input de la caja cantidad
+      // const valor = await inputLocator.inputValue(); // Obtener el texto del input
+      console.log("📌 Texto en caja de cantidad productos:", txtCantidad);
+    });
+    
+    
   }
 
   async selectStore(optionText: string) {
@@ -299,7 +314,6 @@ export class LoginPage extends BasePage {
         "DESPUES CLIC FINALIZAR PEDIDO,se detecto recarga_page_XBORRAR"
       );
     });
-
   }
   async pageCheckout() {
     await this.safeExecute(
@@ -331,7 +345,6 @@ export class LoginPage extends BasePage {
     this.getCurrentDate(10);
   }
 
-  
   async chooseDate() {
     // Suponiendo que ya tienes una instancia de la página
     const dias = await this.page.$$(
@@ -369,7 +382,8 @@ export class LoginPage extends BasePage {
       console.log(`Paso exitoso en:"${actionName}"`);
     } catch (error) {
       console.error(`Error during:: "${actionName}":`, error);
-      throw new Error("Prueba detenida debido a la condición....");
+      throw new Error(`Prueba detenida debido a la condición....${actionName}`);
+
       //expect(true).toBe(false); NO DETIENE PRUEBA ,PENDIENTE PRUEBAS
     }
   }

@@ -9,7 +9,7 @@ export class BasePage {
   async waitForElement(
     selector: string,
     state: "visible" | "attached" | "hidden" = "visible",
-    timeout = 29000
+    timeout = 29123
   ) {
     
     await this.page.waitForSelector(selector, { state, timeout });

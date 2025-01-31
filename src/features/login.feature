@@ -1,10 +1,10 @@
+# npx cucumber-js src/features --tags "@login" --retry 2
 
 @login
 Feature: Login en la web Wong
   Como usuario nuevo,regular,prime
   Quiero iniciar sesión en la aplicación web
 
-  @retry(2)
   Scenario Outline: Usuario inicia sesión y selecciona productos
     Given un usuario de tipo "<tipo_usuario>" con correo "<correo>" y clave "<clave>"
     When el usuario ingresa con las credenciales
@@ -15,5 +15,5 @@ Feature: Login en la web Wong
     # Aún no tienes los puntos y/o stickers suficientes.
     Examples:
       | tipo_usuario    | correo                        | clave     | producto | tienda   |
-      | Usuario regular | francesca.montilla@coderio.co | Cenco1234 | avena    | Wong Ate |
-      | Usuario nuevo   | yordidosaguilar@gmail.com     | 123456aA  | avena    | Wong Ate |
+      | Usuario regular | francesca.montilla@coderio.co | Cenco1234 | leche    | Wong Ate |
+      | Usuario nuevo   | yordidosaguilar@gmail.com     | 123456aA  | arroz    | Wong Ate |
