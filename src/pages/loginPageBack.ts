@@ -1,23 +1,10 @@
 // src/pages/loginPage.ts
-import test, { expect, Page } from "playwright/test";
-import { HomePage } from './homePageServicioEntrega';
+import test, { expect } from "playwright/test";
 import { BasePage } from "./basePage";
-
+import { GeneradorCorreo } from "../utils/generadorCorreo";
+import { Utils } from "../utils/utils";
 
 export class LoginPage extends BasePage {
-  
-  constructor(page:Page) {
-    super(page);
-    const homePage = new HomePage(page);
-    // await homePage.selectStore(tienda);
-    // Se debe llamar a super() y pasar los argumentos necesarios antes de usar "this".
-    // super(this.page);
-    // Inicialización de los selectores
-    // this.desplegableTienda = '.selector-del-desplegable';  // Reemplaza por el selector real
-    // this.buttonConfirmarTienda = '.selector-del-boton-confirmar'; // Reemplaza por el selector real
-  }
-
-  // [x: string]: any;
   private iconoLogin = ".vtex-overlay-layout-0-x-trigger";
   private aceptarCookies = ".swal2-confirm.swal2-styled";
   private usernameInput = 'input[placeholder="Ej.: ejemplo@mail.com"]';
@@ -36,17 +23,12 @@ export class LoginPage extends BasePage {
     'button img[alt="Seleccionar Recojo en Tienda"]';
   private desplegableTienda = ".wongio-wongiocompo1app-0-x-pickup__select";
   private buttonConfirmarTienda = ".wongio-wongiocompo1app-0-x-pickup__submit";
-
-  //await page.click('.wongio-wongiocompo1app-0-x-menu__button_icon:nth-of-type(2)');
   private cajaBusqueda = ".vtex-styleguide-9-x-input";
   private inputCantidadProductosHome =
     ".wongio-wongiocompo1app-0-x-numeric_stepper__input";
   private iconoCarrito = ".wongio-minicart-2-x-minicartIconContainer";
   private namePrimerProductoMiniCarrito = '[id^="name-"]';
   private buttonViewMiniCart = "#proceed-to-checkout";
-
-  
-  
 
   async navigate() {
     console.log("Navigate to login page");
@@ -86,6 +68,7 @@ export class LoginPage extends BasePage {
     //   .innerText();
     // expect(welcomeText).toContain("Tienes disponible:");
   }
+  
   async esperarFormLogin(ejecucion: string = "default") {
     await this.page.waitForLoadState("networkidle");
     await this.page.click(this.iconoLogin);
@@ -94,7 +77,127 @@ export class LoginPage extends BasePage {
       await this.page.click(this.passwordInput);
     }
   }
- 
+  async validarCargaCorrectaPagina(
+    url: string,
+    localizador: string,
+    textoEsperado: string
+  ) {
+    this.esperarFormLogin();
+    if (url == "https://www.wong.pe/institucional/terminos-y-condiciones") {
+      // Escucha el evento 'page' para capturar la nueva pestaña.
+      const [newTab] = await Promise.all([
+        this.page.waitForEvent("popup"),
+        this.page.click(`//a[@href="${url}"]`), // Haces clic en el enlace que abre la nueva pestaña.
+      ]);
+      await newTab.waitForLoadState("load");
+      // Ahora interactúas con la nueva pestaña (newTab).
+      const textoObtenido = (await newTab.locator(localizador).innerText())
+        .trim()
+        .toLowerCase();
+      expect(textoEsperado.trim().toLowerCase()).toEqual(textoObtenido);
+    } else {
+      console.log("RECARGAMISMAPAGINA");
+      await this.page.click(`//a[@href="${url}"]`);
+      await this.page.waitForLoadState("networkidle");
+      await this.waitForElement(localizador);
+      const textoObtenido = (await this.page.locator(localizador).innerText())
+        .trim()
+        .toLowerCase();
+      expect(textoEsperado.trim().toLowerCase()).toEqual(textoObtenido);
+    }
+  }
+  async compararTextoConColorEsperado(
+    textoEsperado: string,
+    textoInsertar: string
+  ) {
+    this.esperarFormLogin("completa");
+    await this.page.fill(this.passwordInput, textoInsertar);
+    await this.validarTextoDeUnElementoCapturado(textoEsperado);
+  }
+  async validarTextosDeRequisitosDeContraseña() {
+    await test.step("Sub pasos", async () => {
+      this.esperarFormLogin("completa");
+      //CREAR METODO PARA REPLICAR PARA N ELEMENTOS
+      await this.validarTextoEnElementoPorIndice(1, "ABC Una letra mayúscula");
+      await this.validarTextoEnElementoPorIndice(2, "abc Una letra minúscula");
+      await this.validarTextoEnElementoPorIndice(3, "123 Un número");
+      await this.validarTextoEnElementoPorIndice(4, "*** Mínimo 8 caracteres");
+    });
+  }
+  async validarTextoDeUnElementoCapturado(textoEsperado: string) {
+    // Captura el texto del hijo correspondiente
+    const texto = await this.page.locator(`.flex-row.c-success`).innerText();
+    // Transformación del texto si es necesario
+    const textoTransformado = Utils.transformarTexto(texto);
+    console.log(`texto capturado:`, textoTransformado, " vs ", textoEsperado);
+    expect(textoTransformado?.trim()).toEqual(textoEsperado);
+  }
+  async validarTextoEnElementoPorIndice(
+    indiceHijo: number,
+    textoEsperado: string
+  ) {
+    // Captura el texto del hijo correspondiente
+    const texto = await this.page
+      .locator(`.mt2:nth-child(${indiceHijo})`)
+      .innerText();
+
+    const textoTransformado = Utils.transformarTexto(texto);
+    console.log(
+      `texto capturado ${indiceHijo}:`,
+      textoTransformado,
+      " vs ",
+      textoEsperado
+    );
+    expect(textoTransformado?.trim()).toEqual(textoEsperado);
+  }
+
+  async alertaMensajeErrorLogin(mensaje: string, tipoMensaje: string) {
+    // const iconoLogin=this.page.locator(this.iconoLogin);
+    // await iconoLogin.waitFor({ state: "visible" });
+    // await iconoLogin.click();
+    // Crear una instancia de la clase y generar el correo
+    const generadorCorreo = new GeneradorCorreo();
+    let correoAleatorio = generadorCorreo.generarCorreo(4); // Cambiar el nombre si lo deseas
+    this.page.waitForLoadState("networkidle");
+    await this.page.click(this.iconoLogin);
+    await this.waitForElement(this.usernameInput);
+    if (tipoMensaje == "login") {
+      console.log(correoAleatorio);
+      await this.page.fill(this.usernameInput, correoAleatorio);
+      await this.page.fill(this.passwordInput, "12345678aA");
+    } else if (tipoMensaje == "correo") {
+      await this.page.fill(this.usernameInput, "correoinvalido@c.");
+    } else if (tipoMensaje == "password") {
+      console.log(correoAleatorio);
+      await this.page.fill(this.usernameInput, correoAleatorio);
+    }
+    //NO le da clic al checkbox
+    // await this.waitForElement(this.checkBox);
+    await this.page.waitForTimeout(1500);
+    await this.page.click(this.checkBox);
+    const isChecked = await this.page.isChecked(
+      ".wongio-wongiocompo1app-0-x-auth__checkbox_input"
+    );
+    if (isChecked) {
+      console.log("✅ Checkbox login exitoso");
+    } else {
+      console.warn("❌ EL CHECKBOX NO ESTA MARCADO");
+    }
+    //Detiene la prueba si check no esta marcado
+    expect(isChecked).toBe(true);
+    await this.page.click(this.submitButton);
+
+    const errorText = await this.page
+      .locator(".vtex-login-2-x-formError") //:visible
+      .textContent();
+    try {
+      expect(errorText?.trim()).toEqual(mensaje);
+    } catch (error) {
+      await this.page.waitForTimeout(69000);
+      // throw error; // Re-lanza el error después de esperar
+    }
+  }
+
   async pageHomeAddProduct(producto: string, tienda: string) {
     // Se repite 2 veces puesto q existe 2 recargas f5
     // await this.page.waitForLoadState("networkidle");
@@ -124,8 +227,7 @@ export class LoginPage extends BasePage {
 
     await this.waitForElement(this.buttonRecogojoEnTienda);
     await this.page.click(this.buttonRecogojoEnTienda);
-    const homePage = new HomePage(this.page);
-    await homePage.selectStore(tienda);
+    await this.selectStore(tienda);
 
     await this.safeExecute("Esperar texto resultado busqueda", () =>
       this.waitForElement(this.validarTextResultadoBusqueda)
@@ -136,18 +238,23 @@ export class LoginPage extends BasePage {
     await this.safeExecute("Click en boton agregar producto", () =>
       this.page.click(this.buttonAddProducto)
     );
-    
 
     await this.safeExecute("Esperar caja cantidad productos", async () => {
       await this.waitForElement(this.inputCantidadProductosHome); // Espera a que el input aparezca
-      const txtCantidad = await this.page.locator(this.inputCantidadProductosHome).inputValue(); //obtener input de la caja cantidad
+      const txtCantidad = await this.page
+        .locator(this.inputCantidadProductosHome)
+        .inputValue(); //obtener input de la caja cantidad
       // const valor = await inputLocator.inputValue(); // Obtener el texto del input
       console.log("📌 Texto en caja de cantidad productos:", txtCantidad);
     });
-    
-    
   }
 
+  async selectStore(optionText: string) {
+    await this.waitForElement(".wongio-wongiocompo1app-0-x-pickup__title"); //titulo modal "Retiro en tienda"
+    await this.page.selectOption(this.desplegableTienda, { label: optionText });
+    await this.waitForElement(this.buttonConfirmarTienda);
+    await this.page.click(this.buttonConfirmarTienda);
+  }
   async pageMinicarrito() {
     //PAGINA DE MINICARRITO
     await this.safeExecute("Esperar icono carrito", () =>

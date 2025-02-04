@@ -2,6 +2,7 @@ import { Page } from "playwright";
 
 export class BasePage {
   constructor(protected page: Page) {}
+  
   async navigateTo(url: string, timeout: number = 90000): Promise<void> {
     await this.page.goto(url, { timeout, waitUntil: "networkidle" });
   }
@@ -11,10 +12,9 @@ export class BasePage {
     state: "visible" | "attached" | "hidden" = "visible",
     timeout = 29123
   ) {
-    
+
     await this.page.waitForSelector(selector, { state, timeout });
     await this.page.isEnabled(selector,{timeout });
-
 
     // const element = this.page.locator(selector);
     // await element.waitFor({ state, timeout });

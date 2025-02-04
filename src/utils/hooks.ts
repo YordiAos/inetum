@@ -31,18 +31,12 @@ Before(async function ({ pickle, testCaseStartedId }: ITestCaseHookParameter) {
 
 After(async () => {
   try {
-    // await browser.close(); // Cierra el navegador al finalizar los tests
+    // await page.close();
+    // await context.close();
+    // await browser.close();
   } catch (error) {
     console.error("Error al cerrar el navegador:", error);
   }
 });
-// After(async function () {
-// const screenshotPath = await captureAndAttachScreenshot(
-//   page,
-//   "AFTER-screenshot"
-// );
-// const screenshotBuffer = fs.readFileSync(screenshotPath);
-// this.attach(screenshotBuffer, "image/png");
-// });
 
 export { browser, context, page }; // Exporta `page` para usarlo en los tests

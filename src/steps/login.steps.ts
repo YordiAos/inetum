@@ -31,7 +31,7 @@ When("el usuario ingresa con las credenciales", async function () {
 // Paso para buscar productos y seleccionar tienda
 Then("el usuario debería poder buscar el producto {string} y seleccionar la tienda {string}", async function (producto, tienda) {
   await loginPage.pageHomeAddProduct(producto, tienda);
-  // await loginPage.pageMinicarrito();
+  await loginPage.pageMinicarrito();
   // await loginPage.pageCarrito();
   // await loginPage.pageCheckout();
 

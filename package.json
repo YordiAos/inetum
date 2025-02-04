@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "test1": "npx cucumber-js --require-module ts-node/register --tags \"@happyPath\" ",
-    "test": "npx cucumber-js src/features --tags \"@list\" "
+    "test": "npx cucumber-js src/features --tags \"@login\" "
   },
   "devDependencies": {
     "@cucumber/cucumber": "^11.1.1",
