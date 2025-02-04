@@ -7,7 +7,7 @@ export class HomePage extends BasePage {
   // Define los selectores como propiedades de la clase.
   readonly desplegableTienda: string;
   readonly buttonConfirmarTienda: string;
-//   readonly homePageModalServicioEntrega: HomePageModalServicioEntrega;
+  readonly homePageModalServicioEntrega: HomePageModalServicioEntrega;
 
   private cajaBusqueda = ".vtex-styleguide-9-x-input";
   private validarTextResultadoBusqueda =
@@ -21,7 +21,7 @@ export class HomePage extends BasePage {
   constructor(page: Page) {
     // Se debe llamar a super() y pasar los argumentos necesarios antes de usar "this".
     super(page);
-    // this.homePageModalServicioEntrega = new HomePageModalServicioEntrega(page);
+    this.homePageModalServicioEntrega = new HomePageModalServicioEntrega(page);
 
     // Inicialización de los selectores
     this.desplegableTienda = ".wongio-wongiocompo1app-0-x-pickup__select";
@@ -56,11 +56,11 @@ export class HomePage extends BasePage {
 
     await this.waitForElement(this.buttonRecogojoEnTienda);
     await this.page.click(this.buttonRecogojoEnTienda);
-    // const homePage = new HomePage(this.page);
-    const homePageModalServicioEntrega = new HomePageModalServicioEntrega(
-      this.page
-    );
-    await homePageModalServicioEntrega.selectStore(tienda);
+    
+    // const homePageModalServicioEntrega = new HomePageModalServicioEntrega(
+    //   this.page
+    // );
+    await this.homePageModalServicioEntrega.selectStore(tienda);
 
     await this.safeExecute("Esperar texto resultado busqueda", () =>
       this.waitForElement(this.validarTextResultadoBusqueda)
@@ -77,7 +77,7 @@ export class HomePage extends BasePage {
       const txtCantidad = await this.page
         .locator(this.inputCantidadProductosHome)
         .inputValue(); //obtener input de la caja cantidad
-      // const valor = await inputLocator.inputValue(); // Obtener el texto del input
+      
       console.log("📌 Texto en caja de cantidad productos:", txtCantidad);
     });
   }

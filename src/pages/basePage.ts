@@ -16,9 +16,6 @@ export class BasePage {
     await this.page.waitForSelector(selector, { state, timeout });
     await this.page.isEnabled(selector,{timeout });
 
-    // const element = this.page.locator(selector);
-    // await element.waitFor({ state, timeout });
-    // Asegurar que el elemento es habilitado antes de continuar
     
   }
 }

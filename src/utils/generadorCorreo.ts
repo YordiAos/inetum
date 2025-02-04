@@ -1,5 +1,5 @@
 export class GeneradorCorreo {
-    // Función para generar una cadena aleatoria
+    //Generar una cadena aleatoria de n caracteres
     generarCadenaAleatoria(longitud: number): string {
       const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
       let cadenaAleatoria = '';
@@ -10,7 +10,6 @@ export class GeneradorCorreo {
       return cadenaAleatoria;
     }
   
-    // Método para generar el correo
     generarCorreo(longitud: number): string {
       const cadenaGenerada = this.generarCadenaAleatoria(longitud) + '@correo.com';
       return cadenaGenerada;
