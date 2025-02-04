@@ -1,8 +1,8 @@
-// home.page.ts
+
 import { Page } from "@playwright/test";
 import { BasePage } from "./basePage";
 
-export class HomePage extends BasePage {
+export class HomePageModalServicioEntrega extends BasePage {
   // Define los selectores como propiedades de la clase.
   readonly desplegableTienda: string;
   readonly buttonConfirmarTienda: string;
