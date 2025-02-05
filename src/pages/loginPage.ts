@@ -34,7 +34,8 @@ export class LoginPage extends BasePage {
 
   async navigate() {
     console.log("Navigate to login page");
-    await this.navigateTo("https://www.wong.pe");
+    // await this.navigateTo("https://www.wong.pe");
+    await this.navigateTo("https://wongfoodqawlschv6io.myvtex.com");
   }
 
   async enterCredentials(username: string, password: string) { 

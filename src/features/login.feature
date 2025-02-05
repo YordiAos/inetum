@@ -1,10 +1,11 @@
 # npx cucumber-js src/features --tags "@login" --retry 2
 
-@login
+@smoke
 Feature: Login en la web Wong
   Como usuario nuevo,regular,prime
   Quiero iniciar sesión en la aplicación web
 
+  @login
   Scenario Outline: Usuario inicia sesión y selecciona productos
     Given un usuario de tipo "<tipo_usuario>" con correo "<correo>" y clave "<clave>"
     When el usuario ingresa con las credenciales
