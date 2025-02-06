@@ -33,6 +33,7 @@ export class HomePage extends BasePage {
     // await this.page.waitForLoadState("networkidle");
     await this.safeExecute("Esperar recarga web 2 veces", async () => {
       this.page.waitForTimeout(9.5 * 1000);
+      
     });
 
     await this.safeExecute(
@@ -56,18 +57,20 @@ export class HomePage extends BasePage {
 
     await this.waitForElement(this.buttonRecogojoEnTienda);
     await this.page.click(this.buttonRecogojoEnTienda);
-    
+
     // const homePageModalServicioEntrega = new HomePageModalServicioEntrega(
     //   this.page
     // );
     await this.homePageModalServicioEntrega.selectStore(tienda);
 
-    await this.safeExecute("Esperar texto resultado busqueda", () =>
-      this.waitForElement(this.validarTextResultadoBusqueda)
-    );
-    await this.safeExecute("Esperar boton agregar producto", () =>
-      this.waitForElement(this.buttonAddProducto)
-    );
+    await this.safeExecute("Esperar texto resultado busqueda", async () => {
+      await this.page.waitForTimeout(5000); // Espera 3 segundos
+      await this.waitForElement(this.validarTextResultadoBusqueda);
+    });
+    await this.safeExecute("Esperar boton agregar producto", async () => {
+      // await this.page.waitForTimeout(5000);
+      this.waitForElement(this.buttonAddProducto);
+    });
     await this.safeExecute("Click en boton agregar producto", () =>
       this.page.click(this.buttonAddProducto)
     );
@@ -77,7 +80,7 @@ export class HomePage extends BasePage {
       const txtCantidad = await this.page
         .locator(this.inputCantidadProductosHome)
         .inputValue(); //obtener input de la caja cantidad
-      
+
       console.log("📌 Texto en caja de cantidad productos:", txtCantidad);
     });
   }
