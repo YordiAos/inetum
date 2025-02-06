@@ -4,12 +4,7 @@ import { BasePage } from "./basePage";
 import { HomePageModalServicioEntrega } from "./homePageModalServicioEntrega";
 
 export class HomePage extends BasePage {
-  // constructor(page: Page) {
-  //   // Se debe llamar a super() y pasar los argumentos necesarios antes de usar "this".
-  //   super(page);
-  //   this.homePageModalServicioEntrega = new HomePageModalServicioEntrega(page);
-    
-  // }
+  
   private homePageModalServicioEntrega=new HomePageModalServicioEntrega(this.page);
 
   // Inicialización de los selectores

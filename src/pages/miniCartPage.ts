@@ -1,6 +1,5 @@
 import test, { expect, Page } from "playwright/test";
 import { BasePage } from "./basePage";
-
 export class MiniCartPage extends BasePage {
 
   private iconoCarrito = ".wongio-minicart-2-x-minicartIconContainer";
