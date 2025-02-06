@@ -3,17 +3,12 @@ import { Page } from "@playwright/test";
 import { BasePage } from "./basePage";
 
 export class HomePageModalServicioEntrega extends BasePage {
-  // Define los selectores como propiedades de la clase.
-  readonly desplegableTienda: string;
-  readonly buttonConfirmarTienda: string;
 
-  constructor(page: Page) {
-    // Se debe llamar a super() y pasar los argumentos necesarios antes de usar "this".
-    super(page);
-    // Inicialización de los selectores
-    this.desplegableTienda = ".wongio-wongiocompo1app-0-x-pickup__select";
-    this.buttonConfirmarTienda = ".wongio-wongiocompo1app-0-x-pickup__submit";
-  }
+  // constructor(page: Page) {
+  //   super(page);    
+  // }
+  private desplegableTienda=".wongio-wongiocompo1app-0-x-pickup__select";
+  private buttonConfirmarTienda = ".wongio-wongiocompo1app-0-x-pickup__submit";
 
   // Método para seleccionar la tienda.
   async selectStore(optionText: string): Promise<void> {

@@ -4,11 +4,18 @@ import { BasePage } from "./basePage";
 import { HomePageModalServicioEntrega } from "./homePageModalServicioEntrega";
 
 export class HomePage extends BasePage {
-  // Define los selectores como propiedades de la clase.
-  readonly desplegableTienda: string;
-  readonly buttonConfirmarTienda: string;
-  readonly homePageModalServicioEntrega: HomePageModalServicioEntrega;
+  // constructor(page: Page) {
+  //   // Se debe llamar a super() y pasar los argumentos necesarios antes de usar "this".
+  //   super(page);
+  //   this.homePageModalServicioEntrega = new HomePageModalServicioEntrega(page);
+    
+  // }
+  private homePageModalServicioEntrega=new HomePageModalServicioEntrega(this.page);
 
+  // Inicialización de los selectores
+  private desplegableTienda = ".wongio-wongiocompo1app-0-x-pickup__select";
+  private buttonConfirmarTienda = ".wongio-wongiocompo1app-0-x-pickup__submit";
+  
   private cajaBusqueda = ".vtex-styleguide-9-x-input";
   private validarTextResultadoBusqueda =
     ".vtex-rich-text-0-x-paragraph--rto-busqueda-txt";
@@ -18,22 +25,12 @@ export class HomePage extends BasePage {
   private inputCantidadProductosHome =
     ".wongio-wongiocompo1app-0-x-numeric_stepper__input";
 
-  constructor(page: Page) {
-    // Se debe llamar a super() y pasar los argumentos necesarios antes de usar "this".
-    super(page);
-    this.homePageModalServicioEntrega = new HomePageModalServicioEntrega(page);
-
-    // Inicialización de los selectores
-    this.desplegableTienda = ".wongio-wongiocompo1app-0-x-pickup__select";
-    this.buttonConfirmarTienda = ".wongio-wongiocompo1app-0-x-pickup__submit";
-  }
   async pageHomeAddProduct(producto: string, tienda: string) {
     // Se repite 2 veces puesto q existe 2 recargas f5
     // await this.page.waitForLoadState("networkidle");
     // await this.page.waitForLoadState("networkidle");
     await this.safeExecute("Esperar recarga web 2 veces", async () => {
       this.page.waitForTimeout(9.5 * 1000);
-      
     });
 
     await this.safeExecute(
@@ -83,17 +80,5 @@ export class HomePage extends BasePage {
 
       console.log("📌 Texto en caja de cantidad productos:", txtCantidad);
     });
-  }
-
-  async safeExecute(actionName: string, action: () => Promise<void>) {
-    try {
-      await action();
-      console.log(`Paso exitoso en:"${actionName}"`);
-    } catch (error) {
-      console.error(`Error during:: "${actionName}":`, error);
-      throw new Error(`Prueba detenida debido a la condición....${actionName}`);
-
-      //expect(true).toBe(false); NO DETIENE PRUEBA ,PENDIENTE PRUEBAS
-    }
   }
 }

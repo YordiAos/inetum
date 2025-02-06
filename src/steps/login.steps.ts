@@ -3,9 +3,11 @@ import { LoginPage } from "../pages/loginPage";
 import { page } from "../utils/hooks"; // Importa `page` desde los hooks
 import { Utils } from "../utils/utils";
 import { HomePage } from "../pages/homePage";
+import { MiniCartPage } from "../pages/miniCartPage";
 
 let loginPage: LoginPage;
 let homePage: HomePage;
+let miniCartPage: MiniCartPage;
 
 // setDefaultTimeout(68000); // Establecer un tiempo de espera predeterminado para la prueba, si es necesario
 
@@ -15,6 +17,7 @@ Given(
   async function (tipoUsuario, correo, clave,web) {
     loginPage = new LoginPage(page);
     homePage = new HomePage(page);
+    miniCartPage=new MiniCartPage(page);
     this.userCredentials = { tipoUsuario, correo, clave,web }; // Guardamos las credenciales en el contexto
   }
 );
@@ -39,13 +42,13 @@ When("el usuario ingresa con las credenciales", async function () {
   );
 });
 
-// Paso para buscar productos y seleccionar tienda
 Then(
   "el usuario debería poder buscar el producto {string} y seleccionar la tienda {string}",
   async function (producto, tienda) {
     // await loginPage.pageHomeAddProduct(producto, tienda);
     await homePage.pageHomeAddProduct(producto, tienda);
-    await loginPage.pageMinicarrito();
+    await miniCartPage.pageMinicarrito();
+    
     // await loginPage.pageCarrito();
     // await loginPage.pageCheckout();
 
@@ -54,3 +57,11 @@ Then(
     // expect(await loginPage.verifySuccess()).toBeTruthy();
   }
 );
+Then(
+  "ir a pagina carrito",
+  async function () {
+    
+  
+  }
+);
+

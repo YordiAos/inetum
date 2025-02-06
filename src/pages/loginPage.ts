@@ -3,10 +3,7 @@ import test, { expect, Page } from "playwright/test";
 import { BasePage } from "./basePage";
 
 export class LoginPage extends BasePage {
-  constructor(page: Page) {
-    super(page);
-  }
-
+  
   private iconoLogin = ".vtex-overlay-layout-0-x-trigger";
   private aceptarCookies = ".swal2-confirm.swal2-styled";
   private usernameInput = 'input[placeholder="Ej.: ejemplo@mail.com"]';
@@ -26,10 +23,7 @@ export class LoginPage extends BasePage {
   private desplegableTienda = ".wongio-wongiocompo1app-0-x-pickup__select";
   private buttonConfirmarTienda = ".wongio-wongiocompo1app-0-x-pickup__submit";
 
-  private iconoCarrito = ".wongio-minicart-2-x-minicartIconContainer";
-  private namePrimerProductoMiniCarrito = '[id^="name-"]';
-  private buttonViewMiniCart = "#proceed-to-checkout";
-
+  
   async navigate(url: string) {
     console.log("Navigate to login page");
     await this.navigateTo(url);
@@ -95,26 +89,7 @@ export class LoginPage extends BasePage {
     }
   }
 
-  async pageMinicarrito() {
-    await this.safeExecute("Esperar icono carrito", () =>
-      this.waitForElement(this.iconoCarrito)
-    );
-    await this.safeExecute("Clic icono carrito", () =>
-      this.page.click(this.iconoCarrito)
-    );
-    await this.safeExecute("Esperar nombre primer producto ", () =>
-      this.waitForElement(this.namePrimerProductoMiniCarrito)
-    );
-    await this.safeExecute("clic boton 'VER CARRITO' ", () =>
-      this.page.click(this.buttonViewMiniCart)
-    );
-
-    await Promise.all([
-      // this.page.waitForNavigation({ waitUntil: "networkidle" }),
-      this.page.waitForURL('**/checkout/#/cart', { timeout: 9999 }), 
-    ]);
-    
-
+  async pageCarrito() {
     await this.safeExecute(
       "Clic checkbox aceptar terminos y condiciones 1",
       () => this.page.click(".icon-check-terms")
@@ -224,17 +199,7 @@ export class LoginPage extends BasePage {
   //   });
   // }
 
-  async safeExecute(actionName: string, action: () => Promise<void>) {
-    try {
-      await action();
-      console.log(`Paso exitoso en:"${actionName}"`);
-    } catch (error) {
-      console.log(`Error during:: "${actionName}":`, error);
-      console.error(`Error during:: "${actionName}":`, error);
-      throw new Error(`Prueba detenida debido a la condición....${actionName}`);
-      //expect(true).toBe(false); NO DETIENE PRUEBA
-    }
-  }
+  
 }
 
 
