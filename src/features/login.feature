@@ -7,7 +7,10 @@ Feature: Login en la web Wong
 
   @login
   Scenario Outline: Usuario inicia sesión y selecciona productos
-    Given un usuario de tipo "<tipo_usuario>" con correo "<correo>" y clave "<clave>"
+  # https://wongfoodqawlschv6io.myvtex.com
+  # https://www.wong.pe
+  # https://www.metro.pe
+    Given un usuario de tipo "<tipo_usuario>" con correo "<correo>" y clave "<clave>" ingresa a "https://www.metro.pe"
     When el usuario ingresa con las credenciales
     Then el usuario debería poder buscar el producto "<producto>" y seleccionar la tienda "<tienda>"
 

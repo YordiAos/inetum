@@ -11,18 +11,18 @@ let homePage: HomePage;
 
 // Paso para inicializar el navegador
 Given(
-  "un usuario de tipo {string} con correo {string} y clave {string}",
-  async function (tipoUsuario, correo, clave) {
+  "un usuario de tipo {string} con correo {string} y clave {string} ingresa a {string}",
+  async function (tipoUsuario, correo, clave,web) {
     loginPage = new LoginPage(page);
     homePage = new HomePage(page);
-    this.userCredentials = { tipoUsuario, correo, clave }; // Guardamos las credenciales en el contexto
+    this.userCredentials = { tipoUsuario, correo, clave,web }; // Guardamos las credenciales en el contexto
   }
 );
 
 // Paso para realizar el login
 When("el usuario ingresa con las credenciales", async function () {
-  const { correo, clave } = this.userCredentials;
-  await loginPage.navigate();
+  const { correo, clave,web } = this.userCredentials;
+  await loginPage.navigate(web);
   this.attach(
     await Utils.captureAndAttachScreenshot(page, "Home-Screenshot"),
     "image/png"
