@@ -1,11 +1,11 @@
 // home.page.ts
 import { Page } from "@playwright/test";
 import { BasePage } from "./basePage";
-import { HomePageModalServicioEntrega } from "./homePageModalServicioEntrega";
+import { HomeModalServicioEntregaPage } from "./homeModalServicioEntregaPage";
 
 export class HomePage extends BasePage {
   
-  private homePageModalServicioEntrega=new HomePageModalServicioEntrega(this.page);
+  private homePageModalServicioEntrega=new HomeModalServicioEntregaPage(this.page);
 
   // Inicialización de los selectores
   private desplegableTienda = ".wongio-wongiocompo1app-0-x-pickup__select";
@@ -50,9 +50,6 @@ export class HomePage extends BasePage {
     await this.waitForElement(this.buttonRecogojoEnTienda);
     await this.page.click(this.buttonRecogojoEnTienda);
 
-    // const homePageModalServicioEntrega = new HomePageModalServicioEntrega(
-    //   this.page
-    // );
     await this.homePageModalServicioEntrega.selectStore(tienda);
 
     await this.safeExecute("Esperar texto resultado busqueda", async () => {

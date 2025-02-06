@@ -2,7 +2,7 @@
 import { Page } from "@playwright/test";
 import { BasePage } from "./basePage";
 
-export class HomePageModalServicioEntrega extends BasePage {
+export class HomeModalServicioEntregaPage extends BasePage {
   // constructor(page: Page) {
   //   super(page);    
   // }

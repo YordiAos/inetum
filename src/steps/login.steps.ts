@@ -4,10 +4,12 @@ import { page } from "../utils/hooks"; // Importa `page` desde los hooks
 import { Utils } from "../utils/utils";
 import { HomePage } from "../pages/homePage";
 import { MiniCartPage } from "../pages/miniCartPage";
+import { PageCarrito } from "../pages/carritoPage";
 
 let loginPage: LoginPage;
 let homePage: HomePage;
 let miniCartPage: MiniCartPage;
+let pageCarrito:PageCarrito;
 
 // setDefaultTimeout(68000); // Establecer un tiempo de espera predeterminado para la prueba, si es necesario
 
@@ -18,6 +20,7 @@ Given(
     loginPage = new LoginPage(page);
     homePage = new HomePage(page);
     miniCartPage=new MiniCartPage(page);
+    pageCarrito=new PageCarrito(page);
     this.userCredentials = { tipoUsuario, correo, clave,web }; // Guardamos las credenciales en el contexto
   }
 );
@@ -51,17 +54,13 @@ Then(
     
     // await loginPage.pageCarrito();
     // await loginPage.pageCheckout();
-
-    // Verifica que la página esté en el estado esperado
-    // await new Promise(resolve => setTimeout(resolve, 2000));
     // expect(await loginPage.verifySuccess()).toBeTruthy();
   }
 );
 Then(
   "ir a pagina carrito",
   async function () {
-    
-  
+    await pageCarrito.pageCarrito();
   }
 );
 
