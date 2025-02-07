@@ -12,8 +12,8 @@ Feature: Login en la web Wong
     # https://www.metro.pe
     Given un usuario de tipo "<tipo_usuario>" con correo "<correo>" y clave "<clave>" ingresa a "https://www.wong.pe"
     When el usuario ingresa con las credenciales
-    # Then el usuario debería poder buscar el producto "<producto>" y seleccionar la tienda "<tienda>"
-    # And ir a pagina carrito
+    Then el usuario debería poder buscar el producto "<producto>" y seleccionar la tienda "<tienda>"
+    And ir a pagina carrito
 
     # Bug modal (aparece aleatoriamente)
     # Sigue acumulando tus stickers virtuales y puntos bonus con tus compras en Wong.pe

@@ -2,6 +2,7 @@
 
 import { Page } from "playwright";
 import { BasePage } from "./basePage";
+import { timeoutPages } from "../utils/hooks";
 
 export class LoginPage extends BasePage {
   private startTime = 0;
@@ -26,9 +27,9 @@ export class LoginPage extends BasePage {
 
   async navigate(url: string) {
     console.log("Navigate to login page");
-    this.startTime = performance.now(); // Tiempo de inicio
-    //la espera goto por defecto es 30s
-    await this.page.goto(url, { waitUntil: "load", timeout: 121*1000 });
+    this.startTime = performance.now();
+    //la espera goto() por defecto es 30s
+    await this.page.goto(url, { waitUntil: "load", timeout: timeoutPages });
     this.endTime = performance.now(); // Tiempo de fin
     console.log(
       `ESPERA .goto() PRIMERA CARGA ${
@@ -70,27 +71,15 @@ export class LoginPage extends BasePage {
   async submitLogin() {
     await this.page.click(this.submitButton);
 
-    this.startTime = performance.now(); // Tiempo de inicio
-    //la espera por defecto es 30s
-    await this.page.waitForLoadState("networkidle", { timeout: 122*1000  });
-    this.endTime = performance.now(); // Tiempo de fin
+    this.startTime = performance.now();
+    //la espera por defecto es indefinida(tomara el tiempo maximo de LOS STEPS) 
+    await this.page.waitForNavigation({ waitUntil: "load" ,timeout:timeoutPages});
+    this.endTime = performance.now();
     console.log(
       `ESPERA waitForLoadState() DESPUES DE LOGIN ${
         (this.endTime - this.startTime) / 1000
       } segundos.`
-    );
-
-    // this.startTime = performance.now(); // Tiempo de inicio
-    // await Promise.all([
-    //   //la espera por defecto es indefinida o se define con ->waitUntil: "load",timeout: xxx
-    //   this.page.waitForNavigation({ waitUntil: "load" }),
-    // ]);
-    // this.endTime = performance.now(); // Tiempo de fin
-    // console.log(
-    //   `ESPERA waitForNavigation() DESPUES DE LOGIN  ${
-    //     (this.endTime - this.startTime) / 1000
-    //   } segundos.`
-    // );
+    ); 
 
     await this.waitForElement(this.iconoLogin);
     await this.page.click(this.iconoLogin);

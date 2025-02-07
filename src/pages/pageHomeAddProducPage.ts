@@ -20,8 +20,7 @@ export class PageHomeAddProducPage extends BasePage {
     ".wongio-wongiocompo1app-0-x-numeric_stepper__input";
 
   async pageHomeAddProduct(producto: string, tienda: string) {
-    // Se repite 2 veces puesto q existe 2 recargas f5
-    // await this.page.waitForLoadState("networkidle");
+    // Wxiste 2 recargas f5 despues de login
     await this.page.waitForLoadState("networkidle");
     // await this.safeExecute("Esperar recarga web 2 veces", async () => {
     //   this.page.waitForTimeout(9.5 * 1000);
@@ -52,11 +51,9 @@ export class PageHomeAddProducPage extends BasePage {
     await this.homePageModalServicioEntrega.selectStore(tienda);
 
     await this.safeExecute("Esperar texto resultado busqueda", async () => {
-      await this.page.waitForTimeout(5000); // Espera 3 segundos
       await this.waitForElement(this.validarTextResultadoBusqueda);
     });
     await this.safeExecute("Esperar boton agregar producto", async () => {
-      // await this.page.waitForTimeout(5000);
       this.waitForElement(this.buttonAddProducto);
     });
     await this.safeExecute("Click en boton agregar producto", () =>

@@ -1,22 +1,16 @@
 import { Page } from "playwright";
+import { timeoutElements,timeoutPages} from "../utils/hooks";
 
 export class BasePage {
   constructor(protected page: Page) {}
   
-  // async navigateTo(url: string, timeout: number = 90000): Promise<void> {
-  //   await this.page.goto(url, { timeout, waitUntil: "networkidle" });
-  // }
-
   async waitForElement(
     selector: string,
     state: "visible" | "attached" | "hidden" = "visible",
-    timeout = 29123
+    timeout: number =timeoutElements
   ) {
-
     await this.page.waitForSelector(selector, { state, timeout });
-    await this.page.isEnabled(selector,{timeout });
-
-    
+    await this.page.isEnabled(selector,{timeout });    
   }
   async safeExecute(actionName: string, action: () => Promise<void>) {
     try {

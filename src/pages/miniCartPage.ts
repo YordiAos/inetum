@@ -1,4 +1,5 @@
 
+import { timeoutPages } from "src/utils/hooks";
 import { BasePage } from "./basePage";
 export class MiniCartPage extends BasePage {
 
@@ -23,7 +24,7 @@ export class MiniCartPage extends BasePage {
 
     await Promise.all([
       // this.page.waitForNavigation({ waitUntil: "networkidle" }),
-      this.page.waitForURL("**/checkout/#/cart", { timeout: 29999 }),
+      this.page.waitForURL("**/checkout/#/cart", { timeout: timeoutPages }),
     ]);
   }
 }

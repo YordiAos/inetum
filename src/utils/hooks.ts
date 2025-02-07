@@ -8,12 +8,16 @@ import {
 import { Page, Browser, BrowserContext, chromium } from "playwright";
 import * as fs from "fs";
 import * as path from "path";
+import dotenv from 'dotenv';
 
 let browser: Browser;
 let context: BrowserContext;
 let page: Page;
 
-setDefaultTimeout(180 * 1000); // n segundos para cada paso cucumber
+dotenv.config();
+setDefaultTimeout(parseInt(process.env.TIMEOUT_STEPS||'61123')); // n segundos para cada paso cucumber
+export const timeoutElements = process.env.TIMEOUT_ELEMENTS ? parseInt(process.env.TIMEOUT_ELEMENTS) : 59123;
+export const timeoutPages = process.env.TIMEOUT_PAGES ? parseInt(process.env.TIMEOUT_PAGES) : 60123;
 
 Before(async function ({ pickle, testCaseStartedId }: ITestCaseHookParameter) {
   console.log(
@@ -54,8 +58,10 @@ Before(async function ({ pickle, testCaseStartedId }: ITestCaseHookParameter) {
   page = await context.newPage(); // Crea una nueva página
   // await page.goto('about:blank');
   // await page.keyboard.press("F11");
-  page.setDefaultTimeout(14100); // Tiempo para acciones,clic,etc
-  page.setDefaultNavigationTimeout(15200); // Tiempo para navegaciones
+  console.log("HOOKS timeoutElements:",timeoutElements);
+  page.setDefaultTimeout(timeoutElements); // Tiempo para acciones,clic,etc
+  console.log("HOOKS timeoutPages:",timeoutPages);
+  page.setDefaultNavigationTimeout(timeoutPages); // Tiempo para navegaciones waitForNavigation()
 });
 
 After(async () => {
