@@ -3,9 +3,9 @@ import { Page } from "playwright";
 export class BasePage {
   constructor(protected page: Page) {}
   
-  async navigateTo(url: string, timeout: number = 90000): Promise<void> {
-    await this.page.goto(url, { timeout, waitUntil: "networkidle" });
-  }
+  // async navigateTo(url: string, timeout: number = 90000): Promise<void> {
+  //   await this.page.goto(url, { timeout, waitUntil: "networkidle" });
+  // }
 
   async waitForElement(
     selector: string,

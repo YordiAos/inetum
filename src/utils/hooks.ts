@@ -13,7 +13,7 @@ let browser: Browser;
 let context: BrowserContext;
 let page: Page;
 
-setDefaultTimeout(47 * 1000); // n segundos para cada paso cucumber
+setDefaultTimeout(180 * 1000); // n segundos para cada paso cucumber
 
 Before(async function ({ pickle, testCaseStartedId }: ITestCaseHookParameter) {
   console.log(

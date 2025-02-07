@@ -1,9 +1,16 @@
 // src/pages/loginPage.ts
 
+import { Page } from "playwright";
 import { BasePage } from "./basePage";
 
 export class LoginPage extends BasePage {
-  
+  private startTime = 0;
+  private endTime = 0;
+  //  constructor() {
+  //   // Inicializamos las propiedades
+  //   this.startTime = 0;
+  //   this.endTime = 0;
+  // }
   private iconoLogin = ".vtex-overlay-layout-0-x-trigger";
   private aceptarCookies = ".swal2-confirm.swal2-styled";
   private usernameInput = 'input[placeholder="Ej.: ejemplo@mail.com"]';
@@ -17,16 +24,17 @@ export class LoginPage extends BasePage {
   private validarTextPuntosBonus =
     "h1.wongio-wongiocompo2app-0-x-points__title";
 
-  private tituloModalServiciosEntrega =
-    ".wongio-wongiocompo1app-0-x-menu__title";
-
-  private desplegableTienda = ".wongio-wongiocompo1app-0-x-pickup__select";
-  private buttonConfirmarTienda = ".wongio-wongiocompo1app-0-x-pickup__submit";
-
-  
   async navigate(url: string) {
     console.log("Navigate to login page");
-    await this.navigateTo(url);
+    this.startTime = performance.now(); // Tiempo de inicio
+    //la espera goto por defecto es 30s
+    await this.page.goto(url, { waitUntil: "load", timeout: 121*1000 });
+    this.endTime = performance.now(); // Tiempo de fin
+    console.log(
+      `ESPERA .goto() PRIMERA CARGA ${
+        (this.endTime - this.startTime) / 1000
+      } segundos.`
+    );
   }
 
   async enterCredentials(username: string, password: string) {
@@ -61,7 +69,28 @@ export class LoginPage extends BasePage {
 
   async submitLogin() {
     await this.page.click(this.submitButton);
-    await Promise.all([this.page.waitForNavigation({ waitUntil: "load" })]);
+
+    this.startTime = performance.now(); // Tiempo de inicio
+    //la espera por defecto es 30s
+    await this.page.waitForLoadState("networkidle", { timeout: 122*1000  });
+    this.endTime = performance.now(); // Tiempo de fin
+    console.log(
+      `ESPERA waitForLoadState() DESPUES DE LOGIN ${
+        (this.endTime - this.startTime) / 1000
+      } segundos.`
+    );
+
+    // this.startTime = performance.now(); // Tiempo de inicio
+    // await Promise.all([
+    //   //la espera por defecto es indefinida o se define con ->waitUntil: "load",timeout: xxx
+    //   this.page.waitForNavigation({ waitUntil: "load" }),
+    // ]);
+    // this.endTime = performance.now(); // Tiempo de fin
+    // console.log(
+    //   `ESPERA waitForNavigation() DESPUES DE LOGIN  ${
+    //     (this.endTime - this.startTime) / 1000
+    //   } segundos.`
+    // );
 
     await this.waitForElement(this.iconoLogin);
     await this.page.click(this.iconoLogin);
@@ -79,68 +108,27 @@ export class LoginPage extends BasePage {
     //   .innerText();
     // expect(welcomeText).toContain("Tienes disponible:");
   }
-
-
-  // async pageCarrito() {
-  //   //PAGINA CARRITO POR MOVER A OTRO METODO
-  //   await this.safeExecute(
-  //     "Redireccion y espera de cargar todas peticiones de page carrito",
-  //     () =>
-  //       // Espera hasta que no haya más peticiones activas.
-  //       this.page.waitForLoadState("networkidle")
-  //   );
-  //   await this.safeExecute(
-  //     "Clic checkbox aceptar terminos y condiciones ",
-  //     () => this.page.click(".icon-check-terms")
-  //   );
-  //   // Opcional: Espera a que el checkbox esté marcado
-  //   const isChecked = await this.page.isChecked("#opt-in-terms-policies"); // Usa el selector adecuado
-  //   if (isChecked) {
-  //     console.warn("✅ Checkbox marcado exitosamente");
-  //   } else {
-  //     console.warn("❌ El checkbox NO está marcado");
-  //   }
-  //   //Detiene la prueba si check no esta marcado
-  //   expect(isChecked).toBe(true);
-  //   await this.safeExecute(
-  //     "Espera y clic del boton 'FINALIZAR PEDIDO' ",
-  //     async () => {
-  //       await this.waitForElement('a[data-i18n="cart.finalize"]');
-  //       await this.page.click('a[data-i18n="cart.finalize"]');
-  //     }
-  //   );
-  //   this.page.on("load", async () => {
-  //     console.log(
-  //       "DESPUES CLIC FINALIZAR PEDIDO,se detecto recarga_page_XBORRAR"
-  //     );
-  //   });
-  // }
-
-  
 }
 
+// await this.safeExecute("Clic checkbox autorizo mis datos 2", async () => {
+//   try {
+//     // Espera a que el elemento esté visible
+//     await this.waitForElement(
+//       '//*[@id="cartLoadedDiv"]/div[3]/div[3]/label[2]'
+//     );
 
+//     // Haz clic en el elemento
+//     await this.page.click(
+//       '//*[@id="cartLoadedDiv"]/div[3]/div[3]/label[2]'
+//     );
+//   } catch (error) {
+//     // Maneja el error específico de esta acción
+//     console.error(
+//       'Error durante "Clic checkbox autorizo mis datos 2":',
+//       error
+//     );
 
-
-    // await this.safeExecute("Clic checkbox autorizo mis datos 2", async () => {
-    //   try {
-    //     // Espera a que el elemento esté visible
-    //     await this.waitForElement(
-    //       '//*[@id="cartLoadedDiv"]/div[3]/div[3]/label[2]'
-    //     );
-
-    //     // Haz clic en el elemento
-    //     await this.page.click(
-    //       '//*[@id="cartLoadedDiv"]/div[3]/div[3]/label[2]'
-    //     );
-    //   } catch (error) {
-    //     // Maneja el error específico de esta acción
-    //     console.error(
-    //       'Error durante "Clic checkbox autorizo mis datos 2":',
-    //       error
-    //     );
-
-    //     // Puedes relanzar el error si es necesario
-    //     //throw error;
-    //   }
-    // });
+//     // Puedes relanzar el error si es necesario
+//     //throw error;
+//   }
+// });

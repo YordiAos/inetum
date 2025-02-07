@@ -23,7 +23,7 @@ export class MiniCartPage extends BasePage {
 
     await Promise.all([
       // this.page.waitForNavigation({ waitUntil: "networkidle" }),
-      this.page.waitForURL("**/checkout/#/cart", { timeout: 9999 }),
+      this.page.waitForURL("**/checkout/#/cart", { timeout: 29999 }),
     ]);
   }
 }
