@@ -8,16 +8,22 @@ import {
 import { Page, Browser, BrowserContext, chromium } from "playwright";
 import * as fs from "fs";
 import * as path from "path";
-import dotenv from 'dotenv';
+
+import { getEnvironmentUrl, TIMEOUTS } from "./config"; // Importamos la configuración
 
 let browser: Browser;
 let context: BrowserContext;
 let page: Page;
 
-dotenv.config();
-setDefaultTimeout(parseInt(process.env.TIMEOUT_STEPS||'61123')); // n segundos para cada paso cucumber
-export const timeoutElements = process.env.TIMEOUT_ELEMENTS ? parseInt(process.env.TIMEOUT_ELEMENTS) : 59123;
-export const timeoutPages = process.env.TIMEOUT_PAGES ? parseInt(process.env.TIMEOUT_PAGES) : 60123;
+// Aplicamos los timeouts desde config.ts
+setDefaultTimeout(TIMEOUTS.STEPS);
+export const timeoutElements = TIMEOUTS.ELEMENTS;
+export const timeoutPages = TIMEOUTS.PAGES;
+
+// Obtenemos la URL del entorno desde config.ts
+export const baseUrl: string = getEnvironmentUrl(process.env.ENV || "QA");
+console.log(`🌍 URL Base: ${baseUrl}`);
+
 
 Before(async function ({ pickle, testCaseStartedId }: ITestCaseHookParameter) {
   console.log(

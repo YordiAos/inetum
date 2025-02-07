@@ -1,4 +1,4 @@
-import { timeoutPages } from "src/utils/hooks";
+import { timeoutPages } from "../utils/hooks";
 import { BasePage } from "./basePage";
 export class PageCarrito extends BasePage {
   async pageCarrito() {

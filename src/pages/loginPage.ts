@@ -2,7 +2,7 @@
 
 import { Page } from "playwright";
 import { BasePage } from "./basePage";
-import { timeoutPages } from "../utils/hooks";
+import { timeoutPages,timeoutElements, baseUrl } from "../utils/hooks";
 
 export class LoginPage extends BasePage {
   private startTime = 0;
@@ -25,11 +25,11 @@ export class LoginPage extends BasePage {
   private validarTextPuntosBonus =
     "h1.wongio-wongiocompo2app-0-x-points__title";
 
-  async navigate(url: string) {
+  async navigate() {
     console.log("Navigate to login page");
     this.startTime = performance.now();
     //la espera goto() por defecto es 30s
-    await this.page.goto(url, { waitUntil: "load", timeout: timeoutPages });
+    await this.page.goto(baseUrl, { waitUntil: "load", timeout: timeoutPages });
     this.endTime = performance.now(); // Tiempo de fin
     console.log(
       `ESPERA .goto() PRIMERA CARGA ${

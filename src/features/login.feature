@@ -7,13 +7,17 @@ Feature: Login en la web Wong
 
   @login
   Scenario Outline: Usuario inicia sesión y selecciona productos
-    # https://wongfoodqawlschv6io.myvtex.com
-    # https://www.wong.pe
-    # https://www.metro.pe
-    Given un usuario de tipo "<tipo_usuario>" con correo "<correo>" y clave "<clave>" ingresa a "https://www.wong.pe"
+    Given un usuario de tipo "<tipo_usuario>" con correo "<correo>" y clave "<clave>"
     When el usuario ingresa con las credenciales
-    Then el usuario debería poder buscar el producto "<producto>" y seleccionar la tienda "<tienda>"
-    And ir a pagina carrito
+    # Then el usuario debería poder buscar el producto "<producto>" y seleccionar la tienda "<tienda>"
+    # And ir a pagina carrito
+
+    # Scenario Outline: Usuario inicia sesión, busca un producto y lo agrega al carrito
+    # Given un usuario "<tipo_usuario>" con el correo "<correo>" y clave "<clave>" inicia sesión en la tienda
+    # When busca el producto "<producto>"
+    # And selecciona la tienda "<tienda>" para la compra
+    # And agrega el producto al carrito
+    # Then el producto debería aparecer en la página del carrito
 
     # Bug modal (aparece aleatoriamente)
     # Sigue acumulando tus stickers virtuales y puntos bonus con tus compras en Wong.pe

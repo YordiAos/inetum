@@ -17,22 +17,22 @@ let pageHomeAddProducPage:PageHomeAddProducPage;
 
 // Paso para inicializar el navegador
 Given(
-  "un usuario de tipo {string} con correo {string} y clave {string} ingresa a {string}",
-  async function (tipoUsuario, correo, clave, web) {
+  "un usuario de tipo {string} con correo {string} y clave {string}",
+  async function (tipoUsuario, correo, clave) {
     loginPage = new LoginPage(page);
     homePage = new HomePage(page);
     miniCartPage = new MiniCartPage(page);
     pageCarrito = new PageCarrito(page);
     pageHomeAddProducPage = new PageHomeAddProducPage(page);
 
-    this.userCredentials = { tipoUsuario, correo, clave, web }; // Guardamos las credenciales en el contexto
+    this.userCredentials = { tipoUsuario, correo, clave }; // Guardamos las credenciales en el contexto
   }
 );
 
 // Paso para realizar el login
 When("el usuario ingresa con las credenciales", async function () {
-  const { correo, clave, web } = this.userCredentials;
-  await loginPage.navigate(web);
+  const { correo, clave } = this.userCredentials;
+  await loginPage.navigate();
   this.attach(
     await Utils.captureAndAttachScreenshot(page, "Home-Screenshot"),
     "image/png"
