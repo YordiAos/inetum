@@ -34,8 +34,8 @@ Before(async function ({ pickle, testCaseStartedId }: ITestCaseHookParameter) {
   context = await browser.newContext({
     viewport: { width: 1900, height: 920 }, // Configura el tamaño del viewport
   });
-  let ambienteBajo = "N0";
-  if (ambienteBajo == "SI") {
+  
+  if (baseUrl == "GD") {
     const cookiesFilePath = path.join(__dirname, "cookies.json");
     try {
       const cookiesData = fs.readFileSync(cookiesFilePath, "utf8");

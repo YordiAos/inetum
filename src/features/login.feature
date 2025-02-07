@@ -9,7 +9,7 @@ Feature: Login en la web Wong
   Scenario Outline: Usuario inicia sesión y selecciona productos
     Given un usuario de tipo "<tipo_usuario>" con correo "<correo>" y clave "<clave>"
     When el usuario ingresa con las credenciales
-    # Then el usuario debería poder buscar el producto "<producto>" y seleccionar la tienda "<tienda>"
+    Then el usuario debería poder buscar el producto "<producto>" y seleccionar la tienda "<tienda>"
     # And ir a pagina carrito
 
     # Scenario Outline: Usuario inicia sesión, busca un producto y lo agrega al carrito
@@ -25,9 +25,10 @@ Feature: Login en la web Wong
     Examples:
       | tipo_usuario        | correo                         | clave      | producto | tienda   |
       # Usuario regular falla al no tener direcciones
-      # | Usuario nuevo   | yordidosaguilar@gmail.com     | 123456aA  | arroz    | Wong Ate |
-      | Usuario regular     | francesca.montilla@coderio.co  | Cenco1234  | leche    | Wong Ate |
-      | Usuario colaborador | jose.gutierrez@cencosud.com.pe | Cencosud12 | fideo    | Wong Ate |
+      | Usuario nuevo   | yordidosaguilar@gmail.com     | 123456aA  | arroz    | Wong Ate |
+      | Usuario regular     | francesca.montilla@coderio.co  | Cenco1234  | cafe    | Wong Ate |
+      # check de autorizo datos solo para user jose
+      # | Usuario colaborador | jose.gutierrez@cencosud.com.pe | Cencosud12 | fideo    | Wong Ate |
 # | Usuario prime     | sukey.alva@cencosud.com.pe     | Cencosud8910 | fideo    | Wong Ate |
 
 
