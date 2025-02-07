@@ -2,7 +2,8 @@
 
 import { Page } from "playwright";
 import { BasePage } from "./basePage";
-import { timeoutPages,timeoutElements, baseUrl } from "../utils/hooks";
+import { timeoutPages, timeoutElements, baseUrl } from "../utils/hooks";
+import { Utils } from "../utils/utils";
 
 export class LoginPage extends BasePage {
   private startTime = 0;
@@ -24,6 +25,32 @@ export class LoginPage extends BasePage {
   private submitButton = ".vtex-login-2-x-sendButton";
   private validarTextPuntosBonus =
     "h1.wongio-wongiocompo2app-0-x-points__title";
+
+  async login(correo: string, clave: string, attach: Function) {
+    await this.navigate();
+    attach(
+      await Utils.captureAndAttachScreenshot(this.page, "Home-Screenshot"),
+      "image/png"
+    );
+
+    await this.enterCredentials(correo, clave);
+    attach(
+      await Utils.captureAndAttachScreenshot(
+        this.page,
+        "Datos Login-Screenshot"
+      ),
+      "image/png"
+    );
+
+    await this.submitLogin();
+    attach(
+      await Utils.captureAndAttachScreenshot(
+        this.page,
+        "After Login-Screenshot"
+      ),
+      "image/png"
+    );
+  }
 
   async navigate() {
     console.log("Navigate to login page");
@@ -72,14 +99,17 @@ export class LoginPage extends BasePage {
     await this.page.click(this.submitButton);
 
     this.startTime = performance.now();
-    //la espera por defecto es indefinida(tomara el tiempo maximo de LOS STEPS) 
-    await this.page.waitForNavigation({ waitUntil: "load" ,timeout:timeoutPages});
+    //la espera por defecto es indefinida(tomara el tiempo maximo de LOS STEPS)
+    await this.page.waitForNavigation({
+      waitUntil: "load",
+      timeout: timeoutPages,
+    });
     this.endTime = performance.now();
     console.log(
       `ESPERA waitForLoadState() DESPUES DE LOGIN ${
         (this.endTime - this.startTime) / 1000
       } segundos.`
-    ); 
+    );
 
     await this.waitForElement(this.iconoLogin);
     await this.page.click(this.iconoLogin);
